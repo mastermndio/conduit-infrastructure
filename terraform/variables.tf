@@ -1,4 +1,4 @@
-variable "keypair" {
+variable "aws_key_pair" {
   type = string
 }
 variable "instance_ami" {
@@ -7,10 +7,6 @@ variable "instance_ami" {
 variable "instance_size" {
   type = string
 }
-variable "instance_name" {
+variable "instance_url" {
   type = string
-}
-variable "instance_tags" {
-  type    = list
-  default = ["development.terraform", "staging.terraform", "production.terraform"]
 }

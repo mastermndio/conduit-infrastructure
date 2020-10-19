@@ -14,13 +14,14 @@ provider "aws" {
 }
 
 #Create ec2 instance
-resource "aws_instance" "mastermnd_stream_test" {
-  count         = 2
-  ami           = "ami-0d9d9d7c41e26df25"
-  instance_type = "t3.micro"
+resource "aws_instance" "conduit_webserver" {
+  ami           = var.instance_ami
+  instance_type = var.instance_size
+  key_name      = var.aws_key_pair
 
   tags = {
-    Name = "HelloWorld"
+    Name        = var.instance_url,
+    Environment = terraform.workspace
   }
 }
 
