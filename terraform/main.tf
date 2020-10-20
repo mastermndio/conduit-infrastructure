@@ -24,8 +24,11 @@ resource "aws_instance" "conduit_webserver" {
     Environment = terraform.workspace
   }
 }
-
-# Create a VPC
-#resource "aws_vpc" "example" {
-#  cidr_block = "10.0.0.0/16"
-#}
+#Create Route53 Record
+resource "aws_route53_record" "conduit_dns" {
+  zone_id = "Z05690023PTE6SH9KEXSI"
+  name    = var.instance_url
+  type    = "A"
+  ttl     = "300"
+  records = [aws_instance.conduit_webserver.public_ip]
+}
