@@ -5,36 +5,36 @@ name: CI
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
-    branches: [ master, dev, stage ]
+    push:
+        branches: [ master, dev, stage ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+        # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    jobs:
+        # This workflow contains a single job called "build"
+        build:
+            # The type of runner that the job will run on
+            runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - uses: hashicorp/setup-terraform@v1
+            # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        - uses: actions/checkout@v2
+        - uses: hashicorp/setup-terraform@v1
 
-			- name: Terraform fmt
-				id: fmt
-				run: terraform fmt -check
-				continue-on-error: true
+        - name: Terraform fmt
+          id: fmt
+          run: terraform fmt -check
+          continue-on-error: true
 
-			- name: Terraform Init
-				id: init
-				run: terraform init
+        - name: Terraform Init
+          id: init
+          run: terraform init
 
-			- name: Terraform Validate
-				id: validate
-				run: terraform validate -no-color
+        - name: Terraform Validate
+          id: validate
+          run: terraform validate -no-color
 
-			- name: Terraform Plan
-				id: plan
-				run: terraform plan -no-color
-				continue-on-error: true
+        - name: Terraform Plan
+          id: plan
+          run: terraform plan -no-color
+          continue-on-error: true
