@@ -5,6 +5,12 @@ terraform {
       version = "~> 3.0"
     }
   }
+
+  backend "s3" {
+    bucket = "mastermnd-terraform-state"
+    key    = "pipelines/states"
+    region = "us-east-1"
+  }
 }
 
 # Configure the AWS Provider
