@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
     push:
-        branches: [ master, dev, stage ]
+        branches: [ master ]
 defaults:
     run:
       working-directory: ./terraform
@@ -54,7 +54,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan --var-file=${GITHUB_REF##*/}.tfvars
+        run: terraform workspace select production && terraform plan --var-file=${GITHUB_REF##*/}.tfvars
         continue-on-error: true
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
