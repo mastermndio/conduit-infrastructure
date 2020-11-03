@@ -31,9 +31,7 @@ jobs:
         #          path: ./terraform
       - name: Terraform fmt
         id: fmt
-        if: ${{ github.branch}}
         run: terraform fmt -check
-        #continue-on-error: true
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
