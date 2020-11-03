@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
     push:
-        branches: [ master ]
+        branches: [ development ]
 defaults:
     run:
       working-directory: ./terraform
@@ -31,9 +31,7 @@ jobs:
         #          path: ./terraform
       - name: Terraform fmt
         id: fmt
-        if: ${{ github.branch}}
         run: terraform fmt -check
-        continue-on-error: true
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -54,15 +52,14 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform workspace select production && terraform plan --var-file=${GITHUB_REF##*/}.tfvars
-        continue-on-error: true
+        run: terraform workspace select development && terraform plan --var-file=${GITHUB_REF##*/}.tfvars
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
       - name: Terraform Apply
         id: apply
-        run: terraform apply --var-file="master.tfvars" -auto-approve
+        run: terraform apply --var-file="development.tfvars" -auto-approve
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
