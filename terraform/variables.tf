@@ -10,3 +10,6 @@ variable "instance_size" {
 variable "instance_url" {
   type = string
 }
+variable "new_variable" {
+  type = string
+}
